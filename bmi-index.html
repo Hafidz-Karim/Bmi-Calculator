@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link rel="stylesheet" href="./bmi-index.css">
+</head>
+<body>
+  <div class="bmi-calculator">
+    <form action="bmi-caculator" id="bmi">
+      <h2>Bmi Calculator</h2>
+      <div>
+        <label for="beratBadan">Masukan Berat Badan Anda</label>
+        <input type="number" id="beratBadan" title="beratBadan" placeholder="Masukan Berat badan" />
+      </div>
+      <div>
+        <label for="tinggiBadan">Masukan Tinggi Badan Anda</label>
+        <input type="number" id="tinggiBadan" title="tinggiBadan" placeholder="Masukan Tinggi Badan Anda" />
+      </div>
+      <button type="submit" onclick="calculateBmi(event)">Calculate</button>
+      <span id="hasil">Hasil:</span>
+      <span id="kategori">Kategori:</span>
+    </form>
+    <div>
+
+    </div>
+  </div>
+  <script>
+    function calculateBmi(event) {
+      event.preventDefault();
+      const tinggiBadan = document.getElementById("tinggiBadan").value;
+      const beratBadan = document.getElementById("beratBadan").value;
+
+      if (tinggiBadan !== "" && beratBadan !== "") {
+        let bmi = (beratBadan / (tinggiBadan / 100) ** 2).toFixed(2);
+        console.log(bmi);
+        showResult(bmi);
+        showCategory(bmi);
+      } else {
+        alert("Maaf inputan tidak boleh kosong");
+      }
+    }
+
+    function showResult(bmi) {
+      const result = document.getElementById("hasil");
+      result.innerText = bmi;
+    }
+
+    function showCategory(bmi) {
+      const categoryElement = document.getElementById("kategori");
+
+      const category = getCategory(bmi);
+      categoryElement.innerText = category;
+    }
+    function getCategory(bmi) {
+      let category;
+
+      switch (true) {
+        case bmi < 18.5:
+          category = "Kurus = kekurangan berat badan";
+          break;
+        case bmi >= 18.5 && bmi <= 24.9:
+          category = "Normal = Ideal";
+          break;
+        case bmi >= 25.0 && bmi <= 29.9:
+          category = "Gemuk = kelebihan berat badan";
+          break;
+        default:
+          category = "Obesitas";
+      }
+      return category;
+    }
+  </script>
+</body>
+
+</html>
